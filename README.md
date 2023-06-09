@@ -45,9 +45,9 @@ type `o` this will clear out any partitions on the drive
 
 We will format the newly created partitions later with the Debian Installer.
 
-The 500M partition format as ext2 and set mount point to /boot.
-The 12.9GB partition format as ext4 and set mount point to /.
-The 1 GB partition format as swap.
+The 500M partition format as `ext2` and set mount point to `/boot`.
+The 12.9GB partition format as `ext4` and set mount point to `/`.
+The 1 GB partition format as `swap`.
 
 #### 6.)  Flash U-Boot (Bootloader) onto the eMMC-Module for the Rock64 SBC
 
