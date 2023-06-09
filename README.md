@@ -75,14 +75,14 @@ The Debain Installer will fail at “Making the System bootable”, ignore this 
 
     # deb http://deb.debian.org/debian bookworm main
     
-    deb http://deb.debian.org/debian bookworm main contrib non-free
-    deb-src http://deb.debian.org/debian bookworm main contrib non-free
+    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
     
-    deb http://deb.debian.org/debian-security bookworm-security main contrib non-free
-    deb-src http://deb.debian.org/debian-security bookworm-security main contrib non-free
+    deb http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
     
-    #deb http://deb.debian.org/debian bookworm-updates main contrib non-free    <-- do not use these, they are not active until Bookworm becomes stable release
-    #deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free    <-- do not use these, they are not active until Bookworm becomes stable release
+    #deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+    #deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
   
 `apt update`
   
