@@ -34,19 +34,19 @@ both files are located in u-boot-rockchip_X_arm64.deb/data.tar.xz/./usr/lib/u-bo
 type `o` this will clear out any partitions on the drive
 , type `p` to list partitions, there should be no partitions left
 , type `n` for new partition, then `p` for primary, `1` for the first partition on the drive
-, `32768` for the first sector, and `647168` for the last sector, then type `a`
+, `32768` for the first sector, and `1056767` for the last sector, then type `a`
 , then type `n` for new partition, then `p` for primary, `2` for the second partition on the drive
-, `647169` for the first sector, and `28213246` for the last sector, then type `n`
+, `1056768` for the first sector, and `28213246` for the last sector, then type `n`
 , then `p` for primary, `3` for the third partition on the drive, `28213247` for the first sector
 , and `30310399` for the last sector, then type `t`, and `3` for the third partition, and `82` for the Hex Code
 , then write the partition table and exit by typing `w`
 
-(steps above create 300M for /boot, 14.7GB for / and 1GB for swap)
+(steps above create 500M for `/boot`, 12.9GB for `/` and 1GB for `swap`)
 
 We will format the newly created partitions later with the Debian Installer.
 
-The 300M partition format as ext2 and set mount point to /boot.
-The 14.7GB partition format as ext4 and set mount point to /.
+The 500M partition format as ext2 and set mount point to /boot.
+The 12.9GB partition format as ext4 and set mount point to /.
 The 1 GB partition format as swap.
 
 #### 6.)  Flash U-Boot (Bootloader) onto the eMMC-Module for the Rock64 SBC
