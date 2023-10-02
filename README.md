@@ -2,9 +2,9 @@
 
 #### 1.)  Download the firmware file and partition image from Debians Server
 
-https://d-i.debian.org/daily-images/arm64/daily/netboot/SD-card-images/firmware.rock64-rk3328.img.gz
+https://deb.debian.org/debian/dists/bookworm/main/installer-arm64/current/images/netboot/SD-card-images/firmware.rock64-rk3328.img.gz
 
-https://d-i.debian.org/daily-images/arm64/daily/netboot/SD-card-images/partition.img.gz
+https://deb.debian.org/debian/dists/bookworm/main/installer-arm64/current/images/netboot/SD-card-images/partition.img.gz
 
 #### 2.)  Merge the firmware file and partition image into bootable Debian image
 
@@ -45,10 +45,6 @@ type `o` this will clear out any partitions on the drive
 
 We will format the newly created partitions later with the Debian Installer.
 
-The 500M partition format as `ext2` and set mount point to `/boot`.
-The 12.9GB partition format as `ext4` and set mount point to `/`.
-The 1 GB partition format as `swap`.
-
 #### 6.)  Flash U-Boot (Bootloader) onto the eMMC-Module for the Rock64 SBC
 
 `lsblk` find device name of your eMMC-Module
@@ -67,39 +63,37 @@ once finished, unmount the eMMC-Module
     Pin 8 –> TX
     Pin 10 –> RX
 
-The Debain Installer will fail at “Making the System bootable”, ignore this and continue with the next step to finish the installation. (bootloader is installed already)
+With the Debian Installer at the “(!!) Partition disks” stage, select Partitioning method: `Manual` and
+format the partitions we created at Step 5 as listed below.
+
+The `500M` partition format as `ext2` and set mount point to `/boot` and set Label to `boot`.
+The `12.9GB` partition format as `ext4` and set mount point to `/` and set Label to `root`.
+The `1 GB` partition format as `swap`.
+
+The Debian Installer might fail at “Making the System bootable”, ignore this and continue with the
+next step to finish the installation. (u-boot is installed already)
 
 #### 8.)  Once installation is finished, add Firmware for Rockchip CDN DisplayPort Controller
 
 `nano /etc/apt/sources.list`  amend as below
 
-    # deb http://deb.debian.org/debian bookworm main
+    # deb http://deb.debian.org/debian/ bookworm main
     
-    deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
-    deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+    deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
     
     deb http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
     deb-src http://deb.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
     
-    #deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
-    #deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+    deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+    deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
   
 `apt update`
   
 `apt install firmware-misc-nonfree` contains –> rockchip/dptx.bin
   
-#### 9.)  Perform system update, enable filesystem check at boot and enable sudo
+#### 9.)  Enable filesystem check at boot and enable sudo for your user
   
-`apt update`
-
-`apt upgrade`
-
-`apt full-upgrade`
-
-`apt autoremove`
-
-`apt autoclean`
-
 use `lsblk` to find correct block device for tune2fs
 
 `tune2fs -c 1 /dev/mmcblkXp1`
@@ -110,14 +104,7 @@ use `lsblk` to find correct block device for tune2fs
  
 `adduser youruser sudo`
  
-#### 10.)  Hide kernel messages during boot
- 
-`nano /etc/sysctl.conf`  amend as below
-
-    # Uncomment the following to stop low-level messages on console
-    kernel.printk = 3 4 1 3
- 
-#### 11.)  If you operate more than one Rock64 on the same network, you may need MAC address spoofing
+#### 10.)  If you operate more than one Rock64 on the same network, you may need MAC address spoofing
  
 `ip link show end0`  shows current MAC address
 
@@ -143,7 +130,7 @@ change the last 3 bits to your liking, DO NOT change the first 3 bits (reserved 
 
 `reboot`  once board is up, check with `ip link show end0` for success
 
-#### 12.) Install U-Boot onto your Rock64 to keep U-Boot up-to-date
+#### 11.) Install U-Boot onto your Rock64 to keep U-Boot up-to-date
 
 `apt install u-boot-rockchip u-boot-menu` (flash-kernel is installed already)
 
